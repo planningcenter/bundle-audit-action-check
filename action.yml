@@ -1,0 +1,18 @@
+name: "Bundler Audit Check"
+description: "Runs bundle-audit on pull requests with Gemfile.lock changes and fails the workflow if vulnerabilities are found."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Bundle Audit
+      uses: planningcenter/bundle-audit-action@v1
+      id: bundle_audit
+
+    - name: Fail Workflow if Vulnerabilities Found
+      if: ${{ steps.bundle_audit.outputs.has_vulnerabilities == 'true' }}
+      run: |
+        cat <<EOF | jq -r .
+        ${{ steps.bundle_audit.outputs.audit_output }}
+        EOF
+        exit 1
+      shell: bash
