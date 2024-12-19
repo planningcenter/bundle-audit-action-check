@@ -12,7 +12,7 @@ runs:
   using: "composite"
   steps:
     - name: Run Bundle Audit
-      uses: planningcenter/bundle-audit-action@v1
+      uses: planningcenter/bundle-audit-action@v1.1.0
       id: bundle_audit
       with:
         ignore_list: ${{ inputs.ignore_list }}
