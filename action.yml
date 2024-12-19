@@ -2,7 +2,7 @@ name: "Bundler Audit Check"
 description: "Runs bundle-audit on pull requests with Gemfile.lock changes and fails the workflow if vulnerabilities are found."
 
 inputs:
-  ignore-list:
+  ignore_list:
     description: "Space-separated list of CVEs to ignore (e.g., CVE-2023-26141 CVE-2021-41182 CVE-2021-41183)"
     required: false
     default: ""
@@ -15,7 +15,7 @@ runs:
       uses: planningcenter/bundle-audit-action@v1
       id: bundle_audit
       with:
-        args: ${{ inputs.ignore-list && '--ignore ' + inputs.ignore-list }}
+        ignore_list: ${{ inputs.ignore_list }}
 
     - name: Fail Workflow if Vulnerabilities Found
       if: ${{ steps.bundle_audit.outputs.has_vulnerabilities == 'true' }}
